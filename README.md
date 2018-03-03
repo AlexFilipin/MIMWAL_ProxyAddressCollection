@@ -43,7 +43,27 @@ Microsoft Identity Manager documentation for ProxyAddressCollection management w
 
 ## Get current values from ProxyAddressCollection
 ### Options
+| Selected Option | Value |
+| --- | --- |
+| ActivityExecutionCondition | |
+| ActorString | |
+| ActorType | Service |
+| Advanced | True |
+| ApplyAuthorizationPolicy | False |
+| Iteration | [//Target/ProxyAddressCollection] |
+| QueryResources | False |
+| ResolveDynamicGrammar | False |
 ### Updates
+| Source Expression | Target | Allow Null |
+| --- | --- | --- |
+| `IIF(Eq(Left([//Value],5),"SMTP:",true),[//Value],Null())` | `[//WorkflowData/OldPrimarySMTP]` | false |
+| `IIF(Eq(Left([//Value],4),"SIP:",true),[//Value],Null())` | `[//WorkflowData/OldPrimarySIP]` | false |
+| `IIF(Eq([//WorkflowData/NewPrimarySMTP],[//Value]),[//Value],Null())` | `[//WorkflowData/PrimarySmtpToRemove]` | false |
+| `IIF(Eq([//WorkflowData/NewPrimarySIP],[//Value]),[//Value],Null())` | `[//WorkflowData/PrimarySipToRemove]` | false |
+### Comment
+1. Iteration over ProxyAddressCollection
+2. The search for old primary values is case sensitive
+2. The search if the new values are already in the ProxyAddressCollection is case insensitive
 
 ## Determine required updates
 ### Options
