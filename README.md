@@ -18,7 +18,7 @@ Worfklow Steps
   3. Determine required updates - Save to WorkflowData
   4. Update attributes on user
 
-1. Build new values
+Build new values
 -------
 [//Target/MailNickname]
 $MailNickname
@@ -53,11 +53,11 @@ IIF(IsPresent($SecondaryMailDomain),"smtp:" + $MailNickname + "@" + $SecondaryMa
 false
 
 
-2. Get current values from ProxyAddressCollection
+Get current values from ProxyAddressCollection
 -------
 
-3. Determine required updates
+Determine required updates
 -------
 
-4. Update attributes on user
+Update attributes on user
 -------
