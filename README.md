@@ -27,7 +27,6 @@ Microsoft Identity Manager documentation for ProxyAddressCollection management w
 | Iteration | |
 | QueryResources | False |
 | ResolveDynamicGrammar | False |
-
 ### Updates
 | Source Expression | Target | Allow Null |
 | --- | --- | --- |
@@ -67,8 +66,46 @@ Microsoft Identity Manager documentation for ProxyAddressCollection management w
 
 ## Determine required updates
 ### Options
+| Selected Option | Value |
+| --- | --- |
+| ActivityExecutionCondition | |
+| ActorString | |
+| ActorType | Service |
+| Advanced | False |
+| ApplyAuthorizationPolicy | False |
+| Iteration | |
+| QueryResources | False |
+| ResolveDynamicGrammar | False |
 ### Updates
-
+| Source Expression | Target | Allow Null |
+| --- | --- | --- |
+| `Not(Eq("SMTP:"+[//WorkflowData/NewUPN],[//WorkflowData/OldPrimarySMTP]))` | `[//WorkflowData/UpdatePrimarySMTP]` | false |
+| `Not(Eq("SIP:"+[//WorkflowData/NewUPN],[//WorkflowData/OldPrimarySIP]))` | `[//WorkflowData/UpdatePrimarySIP]` | false |
+| `Not(Contains([//Target/ProxyAddressCollection],[//WorkflowData/NewSecondarySMTP]))` | `[//WorkflowData/UpdateSecondarySMTP]` | false |
+### Comment
+You will notice I build the new primary SMTP and SIP again instead of using my already populated value in WorkflowData. I have seen issues during testing where the case sensitive was not maintained.
 ## Update attributes on user
 ### Options
+| Selected Option | Value |
+| --- | --- |
+| ActivityExecutionCondition | |
+| ActorString | |
+| ActorType | Service |
+| Advanced | False |
+| ApplyAuthorizationPolicy | False |
+| Iteration | |
+| QueryResources | False |
+| ResolveDynamicGrammar | False |
 ### Updates
+| Source Expression | Target | Allow Null |
+| --- | --- | --- |
+| `[//WorkflowData/NewUPN]` | `[//Target/Upn]` | false |
+| `[//WorkflowData/NewUPN]` | `[//Target/Email]` | false |
+| `IIF([//WorkflowData/UpdatePrimarySMTP],RemoveValues([//WorkflowData/OldPrimarySMTP]),Null())` | `[//Target/ProxyAddressCollection]` | false |
+| `IIF([//WorkflowData/UpdatePrimarySMTP],RemoveValues([//WorkflowData/PrimarySmtpToRemove]),Null())` | `[//Target/ProxyAddressCollection]` | false |
+| `IIF([//WorkflowData/UpdatePrimarySMTP],InsertValues("SMTP:"+[//WorkflowData/NewUPN]),Null())` | `[//Target/ProxyAddressCollection]` | false |
+| `IIF([//WorkflowData/UpdatePrimarySMTP],InsertValues(ReplaceString([//WorkflowData/OldPrimarySMTP],"SMTP:","smtp:")),Null())` | `[//Target/ProxyAddressCollection]` | false |
+| `IIF([//WorkflowData/UpdatePrimarySIP],RemoveValues([//WorkflowData/OldPrimarySIP]),Null())` | `[//Target/ProxyAddressCollection]` | false |
+| `IIF([//WorkflowData/UpdatePrimarySIP],RemoveValues([//WorkflowData/PrimarySipToRemove]),Null())` | `[//Target/ProxyAddressCollection]` | false |
+| `IIF([//WorkflowData/UpdatePrimarySIP],InsertValues("SIP:"+[//WorkflowData/NewUPN]),Null())` | `[//Target/ProxyAddressCollection]` | false |
+| `IIF([//WorkflowData/UpdateSecondarySMTP],InsertValues([//WorkflowData/NewSecondarySMTP]),Null())` | `[//Target/ProxyAddressCollection]` | false |
