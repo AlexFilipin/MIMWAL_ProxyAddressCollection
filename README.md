@@ -18,8 +18,41 @@ Features
   3. Determine required updates - Save to WorkflowData
   4. Update attributes on user
 
+
   1. Build new values
 -------
+[//Target/MailNickname]
+$MailNickname
+false
+
+[//Target/MailDomain]
+$MailDomain
+false
+
+[//Target/SecondaryMailDomain]
+$SecondaryMailDomain
+false
+
+IIF(IsPresent($MailDomain),$MailNickname + "@" + $MailDomain,Null())
+$NewUPN
+false
+
+$NewUPN
+[//WorkflowData/NewUPN]
+false
+
+IIF(IsPresent($NewUPN),"SMTP:" + $NewUPN,Null())
+[//WorkflowData/NewPrimarySMTP]
+false
+
+IIF(IsPresent($NewUPN),"SIP" + ":" + $NewUPN,Null())
+[//WorkflowData/NewPrimarySIP]
+false
+
+IIF(IsPresent($SecondaryMailDomain),"smtp:" + $MailNickname + "@" + $SecondaryMailDomain,Null())
+[//WorkflowData/NewSecondarySMTP]
+false
+
 
   2. Get current values from ProxyAddressCollection
 -------
