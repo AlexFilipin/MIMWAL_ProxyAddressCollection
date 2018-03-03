@@ -2,6 +2,8 @@
 
 Microsoft Identity Manager documentation for ProxyAddressCollection management with a MIMWAL update resources workflow activity. The workflow is split into 4 steps and should be triggered by a MPR as soon as a ProxyAddressCollection relevant attribute is changed (e.g. MailNickName or MailDomain).
 
+This process is highly dependent on the requirements and varies from company to company. Please see this only as a basis for development. Daniel Malmgren has also published an example: https://social.technet.microsoft.com/wiki/contents/articles/37997.mim2016-mimwal-create-workflow-for-changing-e-mail-address.aspx which served as a basis for me. The main difference in my solution is the better error handling should new values already be in the ProxyAddressCollection and the inclusion of another mail domain and SIP address.
+
 ## Features
   1. Adds the old primary SMTP as secondary SMTP
   2. Removes the new primary SMPT if it's already in ProxyAddressCollection as secondary SMTP
@@ -83,7 +85,7 @@ Microsoft Identity Manager documentation for ProxyAddressCollection management w
 | `Not(Eq("SIP:"+[//WorkflowData/NewUPN],[//WorkflowData/OldPrimarySIP]))` | `[//WorkflowData/UpdatePrimarySIP]` | false |
 | `Not(Contains([//Target/ProxyAddressCollection],[//WorkflowData/NewSecondarySMTP]))` | `[//WorkflowData/UpdateSecondarySMTP]` | false |
 ### Comment
-You will notice I build the new primary SMTP and SIP again instead of using my already populated value in WorkflowData. I have seen issues during testing where the case sensitive was not maintained.
+You will notice I build the new primary SMTP and SIP again instead of using my already populated value in WorkflowData. I have seen issues during testing where the case sensitive was not maintained in WorkflowData
 ## Update attributes on user
 ### Options
 | Selected Option | Value |
