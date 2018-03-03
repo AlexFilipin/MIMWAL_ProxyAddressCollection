@@ -11,15 +11,14 @@ Features
   4. Manages mail addresses for two mail domains (both whith the same MailNickName)
   5. Error handling for differences between upper and lower case letters
   
-  Worfklow Steps
+Worfklow Steps
 -------
   1. Build new values (mail addresses, UPN) - Save to WorkflowData
   2. Get current values from ProxyAddressCollection via iteration - Save to WorkflowData
   3. Determine required updates - Save to WorkflowData
   4. Update attributes on user
 
-
-  1. Build new values
+1. Build new values
 -------
 [//Target/MailNickname]
 $MailNickname
@@ -54,11 +53,11 @@ IIF(IsPresent($SecondaryMailDomain),"smtp:" + $MailNickname + "@" + $SecondaryMa
 false
 
 
-  2. Get current values from ProxyAddressCollection
+2. Get current values from ProxyAddressCollection
 -------
 
-  3. Determine required updates
+3. Determine required updates
 -------
 
-  4. Update attributes on user
+4. Update attributes on user
 -------
