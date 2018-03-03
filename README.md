@@ -15,5 +15,17 @@ Features
 -------
   1. Build new values (mail addresses, UPN) - Save to WorkflowData
   2. Get current values from ProxyAddressCollection via iteration - Save to WorkflowData
-  3. Determine which values need to be updated - Save to WorkflowData
+  3. Determine required updates - Save to WorkflowData
   4. Update attributes on user
+
+  1. Build new values
+-------
+
+  2. Get current values from ProxyAddressCollection
+-------
+
+  3. Determine required updates
+-------
+
+  4. Update attributes on user
+-------
